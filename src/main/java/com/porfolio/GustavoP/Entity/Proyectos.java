@@ -6,25 +6,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 @Entity
-public class Acerca {
+public class Proyectos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
     private String descripcion;
     private String img;
+    private String link;
     
     //constructores
 
-    public Acerca() {
+    public Proyectos() {
     }
     
-    public Acerca(String nombre, String descripcion, String img) {
+    public Proyectos(String nombre, String descripcion, String img, String link) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.img = img;
+        this.link = link;
     }
 
     //getters &setters
@@ -61,4 +62,12 @@ public class Acerca {
         this.img = img;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+    
 }

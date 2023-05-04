@@ -1,10 +1,10 @@
 
 package com.porfolio.GustavoP.Controller;
 
-import com.porfolio.GustavoP.Dto.dtoAcerca;
-import com.porfolio.GustavoP.Entity.Acerca;
+import com.porfolio.GustavoP.Dto.dtoProyectos;
+import com.porfolio.GustavoP.Entity.Proyectos;
 import com.porfolio.GustavoP.Security.Controller.Mensaje;
-import com.porfolio.GustavoP.Service.SAcerca;
+import com.porfolio.GustavoP.Service.SProyectos;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,67 +20,66 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
-@RequestMapping("/acerca")
+@RequestMapping("/proyectos")
 @CrossOrigin(origins = {"http://localhost:4200"})
-public class CAcerca {
+public class CProyectos {
     @Autowired
-    SAcerca sAcerca;
+    SProyectos sProyectos;
     
     @GetMapping("/lista")
-    public ResponseEntity<List<Acerca>> list(){
-        List<Acerca> list = sAcerca.list();
+    public ResponseEntity<List<Proyectos>> list(){
+        List<Proyectos> list = sProyectos.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
     
     @GetMapping("/detail/{id}")
-    public ResponseEntity<Acerca> getById(@PathVariable("id") int id){
-        if(!sAcerca.existsById(id))
+    public ResponseEntity<Proyectos> getById(@PathVariable("id") int id){
+        if(!sProyectos.existsById(id))
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.NOT_FOUND);
-        Acerca acerca = sAcerca.getOne(id).get();
-        return new ResponseEntity(acerca, HttpStatus.OK);
+        Proyectos proyectos = sProyectos.getOne(id).get();
+        return new ResponseEntity(proyectos, HttpStatus.OK);
     }
     
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id){
-        if(!sAcerca.existsById(id)) {
+        if(!sProyectos.existsById(id)) {
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.NOT_FOUND);
         }
-        sAcerca.delete(id);
-        return new ResponseEntity(new Mensaje("Campo eliminado"), HttpStatus.OK);
+        sProyectos.delete(id);
+        return new ResponseEntity(new Mensaje("Proyecto eliminado"), HttpStatus.OK);
     }
     
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody dtoAcerca dtoacerca){
-        if(StringUtils.isBlank(dtoacerca.getNombre()))
+    public ResponseEntity<?> create(@RequestBody dtoProyectos dtoproyectos){
+        if(StringUtils.isBlank(dtoproyectos.getNombre()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(sAcerca.existsByNombre(dtoacerca.getNombre()))
+        if(sProyectos.existsByNombre(dtoproyectos.getNombre()))
             return new ResponseEntity(new Mensaje("Ya existe"), HttpStatus.BAD_REQUEST);
         
-        Acerca acerca = new Acerca(dtoacerca.getNombre(), dtoacerca.getDescripcion(), dtoacerca.getImg());
-        sAcerca.save(acerca);
+        Proyectos proyectos = new Proyectos(dtoproyectos.getNombre(), dtoproyectos.getDescripcion(), dtoproyectos.getImg(), dtoproyectos.getLink());
+        sProyectos.save(proyectos);
         
         return new ResponseEntity(new Mensaje("Descripción agregada"), HttpStatus.OK);
     }
     
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoAcerca dtoacerca){
-        if(!sAcerca.existsById(id))
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoProyectos dtoproyectos){
+        if(!sProyectos.existsById(id))
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
-        if(sAcerca.existsByNombre(dtoacerca.getNombre()) && sAcerca.getByNombre(dtoacerca.getNombre()).get().getId() != id)
+        if(sProyectos.existsByNombre(dtoproyectos.getNombre()) && sProyectos.getByNombre(dtoproyectos.getNombre()).get().getId() != id)
             return new ResponseEntity(new Mensaje("Ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(dtoacerca.getNombre()))
+        if(StringUtils.isBlank(dtoproyectos.getNombre()))
             return new ResponseEntity(new Mensaje ("El título es obligatorio"), HttpStatus.BAD_REQUEST);
         
-        Acerca acerca = sAcerca.getOne(id).get();
-        acerca.setNombre(dtoacerca.getNombre());
-        acerca.setDescripcion(dtoacerca.getDescripcion());
-        acerca.setImg(dtoacerca.getImg());
+        Proyectos proyectos = sProyectos.getOne(id).get();
+        proyectos.setNombre(dtoproyectos.getNombre());
+        proyectos.setDescripcion(dtoproyectos.getDescripcion());
+        proyectos.setImg(dtoproyectos.getImg());
+        proyectos.setLink(dtoproyectos.getLink());
         
-        sAcerca.save(acerca);
-        return new ResponseEntity(new Mensaje("Acerca de actualizado"), HttpStatus.OK);
+        sProyectos.save(proyectos);
+        return new ResponseEntity(new Mensaje("Proyecto actualizado"), HttpStatus.OK);
         
     }
-    
 }
