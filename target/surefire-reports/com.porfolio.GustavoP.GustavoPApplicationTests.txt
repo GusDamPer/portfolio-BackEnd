@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.porfolio.GustavoP.GustavoPApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 35.977 s - in com.porfolio.GustavoP.GustavoPApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 36.383 s - in com.porfolio.GustavoP.GustavoPApplicationTests
