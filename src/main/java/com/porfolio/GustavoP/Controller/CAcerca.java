@@ -6,7 +6,7 @@ import com.porfolio.GustavoP.Entity.Acerca;
 import com.porfolio.GustavoP.Security.Controller.Mensaje;
 import com.porfolio.GustavoP.Service.SAcerca;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,10 +54,10 @@ public class CAcerca {
     
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoAcerca dtoacerca){
-        if(StringUtils.isBlank(dtoacerca.getNombre()))
-            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(sAcerca.existsByNombre(dtoacerca.getNombre()))
-            return new ResponseEntity(new Mensaje("Ya existe"), HttpStatus.BAD_REQUEST);
+        //if(StringUtils.isBlank(dtoacerca.getNombre()))
+        //    return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        //if(sAcerca.existsByNombre(dtoacerca.getNombre()))
+        //    return new ResponseEntity(new Mensaje("Ya existe"), HttpStatus.BAD_REQUEST);
         
         Acerca acerca = new Acerca(dtoacerca.getNombre(), dtoacerca.getDescripcion(), dtoacerca.getImg());
         sAcerca.save(acerca);
@@ -69,10 +69,10 @@ public class CAcerca {
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoAcerca dtoacerca){
         if(!sAcerca.existsById(id))
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
-        if(sAcerca.existsByNombre(dtoacerca.getNombre()) && sAcerca.getByNombre(dtoacerca.getNombre()).get().getId() != id)
-            return new ResponseEntity(new Mensaje("Ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(dtoacerca.getNombre()))
-            return new ResponseEntity(new Mensaje ("El título es obligatorio"), HttpStatus.BAD_REQUEST);
+        //if(sAcerca.existsByNombre(dtoacerca.getNombre()) && sAcerca.getByNombre(dtoacerca.getNombre()).get().getId() != id)
+        //    return new ResponseEntity(new Mensaje("Ya existe"), HttpStatus.BAD_REQUEST);
+        //if(StringUtils.isBlank(dtoacerca.getNombre()))
+        //    return new ResponseEntity(new Mensaje ("El título es obligatorio"), HttpStatus.BAD_REQUEST);
         
         Acerca acerca = sAcerca.getOne(id).get();
         acerca.setNombre(dtoacerca.getNombre());
